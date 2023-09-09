@@ -1,0 +1,10 @@
+version: '3'
+services:
+  trafilea-challenge:
+    build: .
+    container_name: 'trafilea-challenge'
+    ports:
+      - 8080:8080
+networks:
+  db:
+  backend:
