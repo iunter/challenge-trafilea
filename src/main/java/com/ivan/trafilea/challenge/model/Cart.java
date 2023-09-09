@@ -62,7 +62,11 @@ public class Cart {
     }
 
     public void addOrModifyProductCart(ProductCart productCart){
-
+        Integer index = this.productCarts.indexOf(productCart);
+        if (index != -1)
+        {
+            this.productCarts.set(index, productCart);
+        }
     }
 
 }

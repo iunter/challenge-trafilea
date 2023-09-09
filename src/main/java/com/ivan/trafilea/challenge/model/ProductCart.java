@@ -44,6 +44,6 @@ public class ProductCart
 
     public Boolean equals (ProductCart otherProduct)
     {
-        return this.productCartKey == otherProduct.getProductCartKey();
+        return this.productCartKey.equals(otherProduct.getProductCartKey());
     }
 }

@@ -33,4 +33,9 @@ public class ProductCartKey implements Serializable {
     public void setCartId(Long cartId) {
         this.cartId = cartId;
     }
+
+    public Boolean equals (ProductCartKey otherProductCartKey)
+    {
+        return (this.productId == otherProductCartKey.getProductId() && this.getCartId() == otherProductCartKey.getCartId());
+    }
 }

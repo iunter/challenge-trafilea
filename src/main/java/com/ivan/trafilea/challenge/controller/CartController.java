@@ -52,9 +52,6 @@ public class CartController
     @PutMapping("/{userId}")
     public Cart addProduct(@RequestBody List<ProdQuantity> prodQuantityList, @PathVariable String userId)
     {
-
-        List<Product> productList = Collections.emptyList();
-        List<ProductCart> productCartList = Collections.emptyList();
         try
         {
             Cart cart = cartService.findByUser(userId);
@@ -66,6 +63,7 @@ public class CartController
 
                 Optional<ProductCart> optionalProductCart = productCartService.findById(key);
                 ProductCart productCart = null;
+
                 if (optionalProductCart.isPresent())
                 {
                     productCart = optionalProductCart.get();
@@ -76,12 +74,11 @@ public class CartController
                     productCart = new ProductCart(key, product, cart, prodQuantity.getQuantity());
                 }
 
-                productCartList.add(productCart);
+                cart.addOrModifyProductCart(productCart);
 
                 productCartService.addToCart(productCart);
 
             }
-            cart.setProductCarts(productCartList);
 
             return  cartService.editCart(cart);
         }
