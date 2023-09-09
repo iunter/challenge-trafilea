@@ -4,23 +4,21 @@ import com.ivan.trafilea.challenge.model.enums.ECategory;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @ToString
 @EqualsAndHashCode
 @Entity
+@Table(name = "product")
 public class Product {
     private  @Id @GeneratedValue Long productId;
     private String name;
     private ECategory category;
     private Integer price;
 
-    @ManyToMany(mappedBy = "products")
-    private List<Cart> carts;
+    @OneToMany(mappedBy = "product")
+    private List<ProductCart> productCarts;
 
     public Product (String name, ECategory category, Integer price){
         this.name = name;
@@ -60,11 +58,11 @@ public class Product {
         this.price = price;
     }
 
-    public List<Cart> getCarts() {
-        return carts;
+    public List<ProductCart> getProductCarts() {
+        return productCarts;
     }
 
-    public void setCarts(List<Cart> carts) {
-        this.carts = carts;
+    public void setProductCarts(List<ProductCart> productCarts) {
+        this.productCarts = productCarts;
     }
 }

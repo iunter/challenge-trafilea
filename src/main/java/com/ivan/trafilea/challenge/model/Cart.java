@@ -9,19 +9,25 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @Entity
+@Table(name = "cart")
 public class Cart {
 
     @Id @GeneratedValue Long cartId;
 
-    private String userID;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name= "userId", referencedColumnName = "userId")
+    private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "productCart",
-            joinColumns = @JoinColumn(name = "cartId"),
-            inverseJoinColumns = @JoinColumn(name = "productId")
-    )
-    private List<Product> products;
+    private Boolean isActive;
+
+    @OneToMany(mappedBy = "cart")
+    private List<ProductCart> productCarts;
+
+    public Cart(User user, List<ProductCart> productCarts, Boolean isActive) {
+        this.user = user;
+        this.productCarts = productCarts;
+        this.isActive = isActive;
+    }
 
     public Long getCartId() {
         return cartId;
@@ -31,20 +37,32 @@ public class Cart {
         this.cartId = cartId;
     }
 
-    public String getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public Boolean getActive() {
+        return isActive;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public List<ProductCart> getProductCarts() {
+        return productCarts;
+    }
+
+    public void setProductCarts(List<ProductCart> productCarts) {
+        this.productCarts = productCarts;
+    }
+
+    public void addOrModifyProductCart(ProductCart productCart){
+
     }
 
 }

@@ -1,8 +1,11 @@
 package com.ivan.trafilea.challenge.configuration.database;
 
 import com.ivan.trafilea.challenge.model.Product;
+import com.ivan.trafilea.challenge.model.User;
 import com.ivan.trafilea.challenge.model.enums.ECategory;
+import com.ivan.trafilea.challenge.repository.ICartRepository;
 import com.ivan.trafilea.challenge.repository.IProductRepository;
+import com.ivan.trafilea.challenge.repository.IUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -15,14 +18,22 @@ public class Loader {
     private static final Logger log = LoggerFactory.getLogger(Loader.class);
 
     @Bean
-    CommandLineRunner initDatabase(IProductRepository repository){
+    CommandLineRunner initDatabase(IProductRepository productRepository, IUserRepository userRepository){
         return args -> {
-            log.info("Loading " + repository.save(new Product("Expensive Coffee", ECategory.COFFEE, 100)));
-            log.info("Loading " + repository.save(new Product("Cheap Coffee", ECategory.COFFEE, 50)));
-            log.info("Loading " + repository.save(new Product("Expensive Equipment", ECategory.EQUIPMENT, 100)));
-            log.info("Loading " + repository.save(new Product("Cheap Equipment", ECategory.EQUIPMENT, 50)));
-            log.info("Loading " + repository.save(new Product("Expensive Accessory", ECategory.ACCESSORIES, 100)));
-            log.info("Loading " + repository.save(new Product("Cheap Accessory", ECategory.ACCESSORIES, 50)));
+            //LOADING PRODUCTS
+            log.info("Loading " + productRepository.save(new Product("Expensive Coffee", ECategory.COFFEE, 100)));
+            log.info("Loading " + productRepository.save(new Product("Cheap Coffee", ECategory.COFFEE, 50)));
+            log.info("Loading " + productRepository.save(new Product("Expensive Equipment", ECategory.EQUIPMENT, 100)));
+            log.info("Loading " + productRepository.save(new Product("Cheap Equipment", ECategory.EQUIPMENT, 50)));
+            log.info("Loading " + productRepository.save(new Product("Expensive Accessory", ECategory.ACCESSORIES, 100)));
+            log.info("Loading " + productRepository.save(new Product("Cheap Accessory", ECategory.ACCESSORIES, 50)));
+
+            //LOADING USERS
+            log.info("Loading " + userRepository.save(new User("user1", "1234")));
+            log.info("Loading " + userRepository.save(new User("user2", "1234")));
+            log.info("Loading " + userRepository.save(new User("user3", "1234")));
+            log.info("Loading " + userRepository.save(new User("user4", "1234")));
+
         };
     }
 }
