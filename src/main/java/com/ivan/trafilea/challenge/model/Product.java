@@ -1,6 +1,7 @@
 package com.ivan.trafilea.challenge.model;
 
 import com.ivan.trafilea.challenge.model.enums.ECategory;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "product")
+@ApiModel
 public class Product {
     private  @Id @GeneratedValue Long productId;
     private String name;

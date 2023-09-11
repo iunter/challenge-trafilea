@@ -1,5 +1,6 @@
 package com.ivan.trafilea.challenge.model;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
+@ApiModel
 public class ProductCartKey implements Serializable {
 
     @Column(name = "productId")

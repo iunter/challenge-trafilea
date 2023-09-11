@@ -8,14 +8,15 @@ import com.ivan.trafilea.challenge.model.enums.ECategory;
 import com.ivan.trafilea.challenge.service.CartService;
 import com.ivan.trafilea.challenge.service.OrderService;
 import com.ivan.trafilea.challenge.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,8 +42,15 @@ public class OrderController {
         this.userService = userService;
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Object> placeOrder(@PathVariable String userId)
+    @Operation(summary = "Places an order from a given cart", description = "Returns the order, the cart gets deactivated")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Successfully created"),
+            @ApiResponse(responseCode = "404", description = "User does not exist"),
+            @ApiResponse(responseCode = "400", description = "An have been found placing an order")
+    })
+    @PostMapping("/{userId}")
+    public ResponseEntity<Object> placeOrder(
+            @PathVariable @Parameter(name = "userId", description = "It utilizes the userId to find the active cart assigned to it") String userId)
     {
         try
         {
@@ -50,9 +58,9 @@ public class OrderController {
             Order order = new Order();
             order.setCart(cart);
 
-            order.setTotalProducts(calculateTotalProducts(cart));
             order.setTotalDiscounts(calculateDiscounts(cart));
             order.setTotalShipping(calculateShipping(cart));
+            order.setTotalProducts(calculateTotalProducts(cart));
             order.setTotalOrder(order.getTotalProducts() - order.getTotalDiscounts());
 
             cart.setActive(false);

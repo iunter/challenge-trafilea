@@ -2,14 +2,17 @@ package com.ivan.trafilea.challenge.controller;
 
 import com.ivan.trafilea.challenge.model.*;
 import com.ivan.trafilea.challenge.service.CartService;
-import com.ivan.trafilea.challenge.service.ProductCartService;
+import com.ivan.trafilea.challenge.service.CartItemService;
 import com.ivan.trafilea.challenge.service.ProductService;
 import com.ivan.trafilea.challenge.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,23 +28,22 @@ public class CartController
     private UserService userService;
     private ProductService productService;
 
-    private ProductCartService productCartService;
+    private CartItemService cartItemService;
 
-    public CartController(CartService cartService, UserService userService, ProductService productService, ProductCartService productCartService)
+    public CartController(CartService cartService, UserService userService, ProductService productService, CartItemService cartItemService)
     {
         this.cartService = cartService;
         this.userService = userService;
         this.productService = productService;
-        this.productCartService = productCartService;
+        this.cartItemService = cartItemService;
     }
 
-    //GETS CART FOR ONE USER
-    @GetMapping("/{userId}")
-    public Cart getUserCart(@PathVariable String userId)
-    {
-        return cartService.findByUser(userId);
-    }
-
+    @Operation(summary = "Creates a new cart for a user", description = "Returns a new cart")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Successfully created"),
+            @ApiResponse(responseCode = "404", description = "User does not exist"),
+            @ApiResponse(responseCode = "401", description = "There is already an active cart for the user")
+    })
     @PostMapping("/{userId}")
     public ResponseEntity<Object> newCart(@PathVariable String userId)
     {
@@ -58,7 +60,15 @@ public class CartController
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<Object> addOrModifyProduct(@RequestBody List<ProdQuantity> prodQuantityList, @PathVariable String userId)
+    @Operation(summary = "Adds new items to or modifies existing ones inside a cart", description = "Returns the modified cart")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully updated"),
+            @ApiResponse(responseCode = "404", description = "User does not exist"),
+            @ApiResponse(responseCode = "401", description = "An active cart for the user could not be found")
+    })
+    public ResponseEntity<Object> addOrModifyProduct(
+            @RequestBody @Parameter(name = "ProdQuantityList", description = "A list with the product id and the desired quantity") List<ProdQuantity> prodQuantityList,
+            @PathVariable @Parameter(name = "userId", description = "It utilizes the userId to find the active cart assigned to it") String userId)
     {
         try
         {
@@ -69,7 +79,7 @@ public class CartController
 
                 ProductCartKey key = new ProductCartKey(product.getProductId(), cart.getCartId());
 
-                Optional<CartItem> optionalProductCart = productCartService.findById(key);
+                Optional<CartItem> optionalProductCart = cartItemService.findById(key);
                 CartItem cartItem = null;
 
                 if (optionalProductCart.isPresent())
@@ -84,7 +94,7 @@ public class CartController
 
                 cart.addOrModifyProductCart(cartItem);
 
-                productCartService.addOrModifyProductCart(cartItem);
+                cartItemService.addOrModifyProductCart(cartItem);
 
             }
 

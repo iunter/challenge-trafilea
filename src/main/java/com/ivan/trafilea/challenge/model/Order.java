@@ -1,5 +1,6 @@
 package com.ivan.trafilea.challenge.model;
 
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "orders")
+@ApiModel
 public class Order {
 
     @Id @GeneratedValue private Long orderId;

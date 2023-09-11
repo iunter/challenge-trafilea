@@ -16,6 +16,7 @@ public enum ECategory implements ShippingStrategy, DiscountStrategy {
 
                 @Override
                 public Double calculateDiscount(Cart cart) {
+                    Double totalDiscount = 0.0;
                     for (CartItem cartItem : cart.getCartItems())
                     {
                         if(cartItem.getProduct().getCategory().equals(COFFEE))
@@ -23,11 +24,12 @@ public enum ECategory implements ShippingStrategy, DiscountStrategy {
                             if(cartItem.getQuantity() >= 2)
                             {
                                 cartItem.setQuantity(cartItem.getQuantity() + 1);
+                                totalDiscount += cartItem.getProduct().getPrice();
                             }
                         }
                     }
 
-                    return 0.0;
+                    return totalDiscount;
                 }
             },
     EQUIPMENT

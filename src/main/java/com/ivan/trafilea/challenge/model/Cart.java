@@ -1,5 +1,6 @@
 package com.ivan.trafilea.challenge.model;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,12 +14,13 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@ApiModel
 @Table(name = "cart")
 public class Cart {
 
     @Id @GeneratedValue Long cartId;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "USER_ID", referencedColumnName = "userId")
     private User user;
 

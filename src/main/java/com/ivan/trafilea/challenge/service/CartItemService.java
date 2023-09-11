@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class ProductCartService
+public class CartItemService
 {
 
     private IProductCartRepository repository;
 
-    public ProductCartService(IProductCartRepository repository)
+    public CartItemService(IProductCartRepository repository)
     {
         this.repository = repository;
     }
