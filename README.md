@@ -15,20 +15,20 @@ docker compose up
 ## Accesing swagger-ui
 ### go to http://localhost:8080/swagger-ui/#/ and a screen like this will appear
 
+![swagger](https://github.com/iunter/challenge-trafilea/assets/18707501/17c4de1e-33a0-47a4-9ff8-aa91afabd5d7)
 
-![swagger](https://github.com/iunter/challenge-trafilea/assets/18707501/2edaef00-485a-4c3f-a9cc-3c29a748b526)
 
 ### Opening the menus will show the following
 
-![swagger 2](https://github.com/iunter/challenge-trafilea/assets/18707501/238f8899-1c3f-46e4-97ac-2390a01a5313)
+![swagger 2](https://github.com/iunter/challenge-trafilea/assets/18707501/af74dd9a-a7b4-41e2-b151-c89c81780dbd)
 
 ### Clicking on the methods the information on how to execute the endpoint will show alongside with description
 
-![swagger 3](https://github.com/iunter/challenge-trafilea/assets/18707501/bb156d1e-4d88-4bb6-a028-71dc9cfdd944)
+![swagger 3](https://github.com/iunter/challenge-trafilea/assets/18707501/e49be6c0-5c52-40ce-8ffe-b9ac7af89561)
 
 ### To try press on the button that says *Try it out*, input the necessary data and then press execute.
 
-![swagger 4](https://github.com/iunter/challenge-trafilea/assets/18707501/21bf407c-7175-4d57-8118-bbb2412a03fd)
+![swagger 4](https://github.com/iunter/challenge-trafilea/assets/18707501/95ec4c04-2d85-45a4-828b-abe3b904dea6)
 
 ### It is recomended to test the application utilizing swagger since it is well documented and it has access to request examples. 
 
@@ -46,8 +46,8 @@ docker compose up
 - Password = "password"
 - JDBC URL = "jdbc:h2:mem:testdb"
 
-![h2 console](https://github.com/iunter/challenge-trafilea/assets/18707501/2837c3e8-7924-4953-854d-a09f60150a0a)
+![h2 console](https://github.com/iunter/challenge-trafilea/assets/18707501/44311811-a657-45dc-b3c6-df5ceb59a898)
 
 ### Once connected the screen should look something like the following
 
-![h2 console 2](https://github.com/iunter/challenge-trafilea/assets/18707501/6592fedd-2e89-492e-b2ad-3e706888791a)
+![h2 console 2](https://github.com/iunter/challenge-trafilea/assets/18707501/b1cd777e-31f7-4a2e-bd37-c613b1bc450b)
