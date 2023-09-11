@@ -12,6 +12,8 @@ Once it finished building run
 docker compose up
 ```
 
+IMPORTANT: The application uses the 8080 port
+
 ## Accesing swagger-ui
 ### go to http://localhost:8080/swagger-ui/#/ and a screen like this will appear
 
