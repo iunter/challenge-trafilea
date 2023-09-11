@@ -1,6 +1,6 @@
 package com.ivan.trafilea.challenge.service;
 
-import com.ivan.trafilea.challenge.model.ProductCart;
+import com.ivan.trafilea.challenge.model.CartItem;
 import com.ivan.trafilea.challenge.model.ProductCartKey;
 import com.ivan.trafilea.challenge.repository.IProductCartRepository;
 import org.springframework.stereotype.Service;
@@ -18,12 +18,12 @@ public class ProductCartService
         this.repository = repository;
     }
 
-    public ProductCart addToCart(ProductCart productCart)
+    public CartItem addOrModifyProductCart(CartItem cartItem)
     {
-        return repository.save(productCart);
+        return repository.save(cartItem);
     }
 
-    public Optional<ProductCart> findById(ProductCartKey productCartKey)
+    public Optional<CartItem> findById(ProductCartKey productCartKey)
     {
         return repository.findById(productCartKey);
     }

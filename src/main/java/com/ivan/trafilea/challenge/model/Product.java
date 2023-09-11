@@ -1,7 +1,9 @@
 package com.ivan.trafilea.challenge.model;
 
 import com.ivan.trafilea.challenge.model.enums.ECategory;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -10,17 +12,19 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "product")
 public class Product {
     private  @Id @GeneratedValue Long productId;
     private String name;
     private ECategory category;
-    private Integer price;
+    private Double price;
 
     @OneToMany(mappedBy = "product")
-    private List<ProductCart> productCarts;
+    private List<CartItem> cartItems;
 
-    public Product (String name, ECategory category, Integer price){
+    public Product (String name, ECategory category, Double price){
         this.name = name;
         this.category = category;
         this.price = price;
@@ -50,19 +54,19 @@ public class Product {
         this.category = category;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public List<ProductCart> getProductCarts() {
-        return productCarts;
+    public List<CartItem> getCartItems() {
+        return cartItems;
     }
 
-    public void setProductCarts(List<ProductCart> productCarts) {
-        this.productCarts = productCarts;
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 }

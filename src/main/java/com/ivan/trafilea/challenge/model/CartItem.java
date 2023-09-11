@@ -1,8 +1,7 @@
 package com.ivan.trafilea.challenge.model;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,17 +9,22 @@ import javax.persistence.*;
 @ToString
 @Entity
 @AllArgsConstructor
-public class ProductCart
+@NoArgsConstructor
+@Getter
+@Setter
+public class CartItem
 {
 
     @EmbeddedId
     private ProductCartKey productCartKey;
 
+    @JsonIgnore
     @ManyToOne
     @MapsId("productId")
     @JoinColumn(name = "productId")
     private Product product;
 
+    @JsonIgnore
     @ManyToOne
     @MapsId("cartId")
     @JoinColumn(name = "cartId")
@@ -28,21 +32,7 @@ public class ProductCart
 
     private Integer quantity;
 
-    public ProductCartKey getProductCartKey() {
-        return productCartKey;
-    }
-
-    public Integer getQuantity()
-    {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity)
-    {
-        this.quantity = quantity;
-    }
-
-    public Boolean equals (ProductCart otherProduct)
+    public Boolean equals (CartItem otherProduct)
     {
         return this.productCartKey.equals(otherProduct.getProductCartKey());
     }

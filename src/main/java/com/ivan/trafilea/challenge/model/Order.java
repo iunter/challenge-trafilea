@@ -1,24 +1,27 @@
 package com.ivan.trafilea.challenge.model;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Getter
+@Setter
+@Table(name = "orders")
 public class Order {
 
     @Id @GeneratedValue private Long orderId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cartId", referencedColumnName = "cartId")
     private Cart cart;
 
-
+    private double totalProducts;
+    private double totalDiscounts;
+    private double totalShipping;
+    private double totalOrder;
 }

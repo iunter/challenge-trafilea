@@ -1,6 +1,8 @@
 package com.ivan.trafilea.challenge.model;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -9,23 +11,28 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "cart")
 public class Cart {
 
     @Id @GeneratedValue Long cartId;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name= "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "USER_ID", referencedColumnName = "userId")
     private User user;
 
     private Boolean isActive;
 
     @OneToMany(mappedBy = "cart")
-    private List<ProductCart> productCarts;
+    private List<CartItem> cartItems;
 
-    public Cart(User user, List<ProductCart> productCarts, Boolean isActive) {
+    @OneToOne(mappedBy = "cart")
+    private Order order;
+
+    public Cart(User user, List<CartItem> cartItems, Boolean isActive) {
         this.user = user;
-        this.productCarts = productCarts;
+        this.cartItems = cartItems;
         this.isActive = isActive;
     }
 
@@ -53,19 +60,22 @@ public class Cart {
         isActive = active;
     }
 
-    public List<ProductCart> getProductCarts() {
-        return productCarts;
+    public List<CartItem> getCartItems() {
+        return cartItems;
     }
 
-    public void setProductCarts(List<ProductCart> productCarts) {
-        this.productCarts = productCarts;
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 
-    public void addOrModifyProductCart(ProductCart productCart){
-        Integer index = this.productCarts.indexOf(productCart);
+    public void addOrModifyProductCart(CartItem cartItem){
+        Integer index = this.cartItems.indexOf(cartItem);
         if (index != -1)
         {
-            this.productCarts.set(index, productCart);
+            this.cartItems.set(index, cartItem);
+        } else
+        {
+            this.cartItems.add(cartItem);
         }
     }
 

@@ -1,14 +1,12 @@
 package com.ivan.trafilea.challenge.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -19,6 +17,7 @@ import java.util.List;
 @Table(name = "users")
 public class User {
     @Id private String userId;
+    @JsonIgnore
     private String password;
 
     @OneToOne(mappedBy = "user")

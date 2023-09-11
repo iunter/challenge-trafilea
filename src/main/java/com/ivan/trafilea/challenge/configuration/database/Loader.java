@@ -21,12 +21,12 @@ public class Loader {
     CommandLineRunner initDatabase(IProductRepository productRepository, IUserRepository userRepository){
         return args -> {
             //LOADING PRODUCTS
-            log.info("Loading " + productRepository.save(new Product("Expensive Coffee", ECategory.COFFEE, 100)));
-            log.info("Loading " + productRepository.save(new Product("Cheap Coffee", ECategory.COFFEE, 50)));
-            log.info("Loading " + productRepository.save(new Product("Expensive Equipment", ECategory.EQUIPMENT, 100)));
-            log.info("Loading " + productRepository.save(new Product("Cheap Equipment", ECategory.EQUIPMENT, 50)));
-            log.info("Loading " + productRepository.save(new Product("Expensive Accessory", ECategory.ACCESSORIES, 100)));
-            log.info("Loading " + productRepository.save(new Product("Cheap Accessory", ECategory.ACCESSORIES, 50)));
+            log.info("Loading " + productRepository.save(new Product("Expensive Coffee", ECategory.COFFEE, 100.00)));
+            log.info("Loading " + productRepository.save(new Product("Cheap Coffee", ECategory.COFFEE, 50.00)));
+            log.info("Loading " + productRepository.save(new Product("Expensive Equipment", ECategory.EQUIPMENT, 100.00)));
+            log.info("Loading " + productRepository.save(new Product("Cheap Equipment", ECategory.EQUIPMENT, 50.00)));
+            log.info("Loading " + productRepository.save(new Product("Expensive Accessory", ECategory.ACCESSORIES, 100.00)));
+            log.info("Loading " + productRepository.save(new Product("Cheap Accessory", ECategory.ACCESSORIES, 50.00)));
 
             //LOADING USERS
             log.info("Loading " + userRepository.save(new User("user1", "1234")));

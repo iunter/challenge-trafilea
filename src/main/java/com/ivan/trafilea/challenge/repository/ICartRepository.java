@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface ICartRepository extends JpaRepository<Cart, Long> {
 
-    @Query(value = "SELECT * FROM cart WHERE cart.userId = :userId", nativeQuery = true)
+    @Query(value = "SELECT * FROM cart WHERE cart.USER_ID = :userId AND cart.IS_ACTIVE = TRUE", nativeQuery = true)
     public Optional<Cart> findByUserId (@Param("userId") String userId);
 }
