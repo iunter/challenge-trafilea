@@ -43,6 +43,66 @@ IMPORTANT: The application uses the 8080 port
 - Create the order.
   - Once the order is created the cart will be marked as innative and a new cart can now be created for the user.
 
+## Example endpoint responses
+
+### [POST] localhost:8080/cart/{userId} (Creates new cart)
+```
+{
+  "cartId": 7,
+  "user":{
+    "userId": "user1"
+  },
+  "cartItems": [],
+  "active": true
+}
+```
+### [PUT] localhost:8080/cart/{userId} (Adds and/or modifies items to an active cart for a user)
+```
+{
+  "cartId": 7,
+  "user":{
+    "userId": "user1"
+  },
+  "cartItems":[
+    {
+      "productCartKey":{
+        "productId": 1,
+        "cartId": 7
+      },
+      "quantity": 4
+    }
+  ],
+  "active": true
+}
+```
+### [POST] localhost:8080/order/{userId} (Creates an order utilizing the active cart of the user)
+```
+{
+  "orderId": 8,
+  "cart":{
+    "cartId": 7,
+    "user":{
+      "userId": "user1"
+    },
+    "cartItems":[
+      {
+        "productCartKey":{
+          "productId": 1,
+          "cartId": 7
+        },
+        "quantity": 5
+      }
+    ],
+    "active": false
+  },
+  "totalProducts": 500,
+  "totalDiscounts": 100,
+  "totalShipping": 10,
+  "totalOrder": 400
+}
+
+```
+
 ## Accesing H2 Database console
 ### go to http://localhost:8080/console and complete the login like follows
 - Password = "password"
