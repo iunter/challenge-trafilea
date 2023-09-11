@@ -7,6 +7,9 @@ import com.ivan.trafilea.challenge.service.ProductService;
 import com.ivan.trafilea.challenge.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/cart")
+@ResponseBody
 public class CartController
 {
     Logger logger = LoggerFactory.getLogger(CartController.class);
@@ -38,13 +42,14 @@ public class CartController
         return cartService.findByUser(userId);
     }
 
-    @PostMapping
-    public Cart newCart(@RequestBody String userId)
+    @PostMapping("/{userId}")
+    public ResponseEntity<Object> newCart(@PathVariable String userId)
     {
         try
         {
             User user = userService.findById(userId);
-            return cartService.createCart(user);
+            Cart cart = cartService.createCart(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(cart);
         }
         catch (Exception e)
         {
@@ -53,7 +58,7 @@ public class CartController
     }
 
     @PutMapping("/{userId}")
-    public Cart addProduct(@RequestBody List<ProdQuantity> prodQuantityList, @PathVariable String userId)
+    public ResponseEntity<Object> addOrModifyProduct(@RequestBody List<ProdQuantity> prodQuantityList, @PathVariable String userId)
     {
         try
         {
@@ -83,7 +88,9 @@ public class CartController
 
             }
 
-            return  cartService.editCart(cart);
+            Cart newCart = cartService.editCart(cart);
+
+            return  ResponseEntity.status(HttpStatus.OK).body(newCart);
         }
         catch (Exception e)
         {

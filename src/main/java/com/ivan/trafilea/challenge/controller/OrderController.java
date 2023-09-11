@@ -10,6 +10,8 @@ import com.ivan.trafilea.challenge.service.OrderService;
 import com.ivan.trafilea.challenge.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +42,7 @@ public class OrderController {
     }
 
     @PutMapping("/{userId}")
-    public Order placeOrder(@PathVariable String userId)
+    public ResponseEntity<Object> placeOrder(@PathVariable String userId)
     {
         try
         {
@@ -56,7 +58,8 @@ public class OrderController {
             cart.setActive(false);
             cartService.editCart(cart);
 
-            return  orderService.placeOrder(order);
+            Order newOrder = orderService.placeOrder(order);
+            return  ResponseEntity.status(HttpStatus.CREATED).body(order);
         }
         catch (Exception e)
         {

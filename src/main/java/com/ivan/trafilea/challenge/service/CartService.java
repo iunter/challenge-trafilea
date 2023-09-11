@@ -4,7 +4,12 @@ import com.ivan.trafilea.challenge.model.Cart;
 import com.ivan.trafilea.challenge.model.User;
 import com.ivan.trafilea.challenge.repository.ICartRepository;
 import net.bytebuddy.implementation.bytecode.Throw;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -44,5 +49,16 @@ public class CartService {
 class CartServiceException extends RuntimeException {
     CartServiceException(String message) {
         super(message);
+    }
+}
+
+@ControllerAdvice
+class CartServiceAdvice {
+
+    @ResponseBody
+    @ExceptionHandler(CartServiceException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    String CartNotFoundHandler(CartServiceException ex) {
+        return ex.getMessage();
     }
 }
